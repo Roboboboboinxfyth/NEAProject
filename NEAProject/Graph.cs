@@ -99,6 +99,7 @@ namespace NEAProject
     {
         public Comic thisComic { get; set; }
         public List<Link> Links;
+        Manager manager = ((App)Application.Current).manager;
 
         public ComicAndLinks(Comic theComic)
         {
@@ -116,6 +117,7 @@ namespace NEAProject
             bool DoesALinkAlreadyExist = false;
             bool ExactLink = false;
             int LinkIndex = -1;
+           
 
             for (int i = 0; i < Links.Count; i++)
             {
@@ -135,13 +137,12 @@ namespace NEAProject
 
             if (DoesALinkAlreadyExist == false)
             {
-                Links.Add(new Link(thisComic, DestinationComic, Att));
-                Links[Links.Count - 1].AddStrength(Att); 
+                Links.Add(new Link(thisComic, DestinationComic, Att));   
+               
             }
             else if (ExactLink == false)
             {
                 Links[LinkIndex].AddAttribute(Att);
-                Links[LinkIndex].AddStrength(Att);
             }
 
         }
@@ -183,7 +184,7 @@ namespace NEAProject
                 {
                     if (link.GetStrength() >= HighestStrength)
                     {
-                        HighestStrength = link.GetStrength();
+                        HighestStrength = link.GetStrength();  // NOT WORKING ask mr evason next lesson. again the filteredatts list is being used in Graph.cs
                         NextLink = link;
                     }
                 }

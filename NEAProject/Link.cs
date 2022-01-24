@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Linq;
 
 namespace NEAProject
 {
@@ -17,7 +18,6 @@ namespace NEAProject
         Comic Comic1;
         Comic Comic2;
         List<string> Atts;
-        int LinkStrength = 0;
 
         //constructor
         public Link(Comic Comic1, Comic Comic2, string Att)
@@ -36,16 +36,37 @@ namespace NEAProject
             Atts.Add(Att);
         }
 
-        public void AddStrength(string Att)
+        //public void AddStrength(string Att)
+        //{
+        //    if (Att == "Author")
+        //        LinkStrength = LinkStrength + 4;
+        //    else if (Att == "Artist")
+        //        LinkStrength = LinkStrength + 3;
+        //    else if (Att == "PubYear")
+        //        LinkStrength = LinkStrength + 2;
+        //    else if (Att == "AgeRating")
+        //        LinkStrength = LinkStrength + 1;
+        //}
+
+        public int GetStrength(List<string> FilteredAtts)
         {
-            if (Att == "Author")
-                LinkStrength = LinkStrength + 4;
-            else if (Att == "Artist")
-                LinkStrength = LinkStrength + 3;
-            else if (Att == "PubYear")
-                LinkStrength = LinkStrength + 2;
-            else if (Att == "AgeRating")
-                LinkStrength = LinkStrength + 1;
+            int LinkStrength = 0;
+            foreach (string Att in Atts)
+            {
+                if (!FilteredAtts.Contains(Att))
+                {
+                    if (Att == "Author")
+                        LinkStrength = LinkStrength + 4;
+                    else if (Att == "Artist")
+                        LinkStrength = LinkStrength + 3;
+                    else if (Att == "PubYear")
+                        LinkStrength = LinkStrength + 2;
+                    else if (Att == "AgeRating")
+                        LinkStrength = LinkStrength + 1;
+                }
+            }
+            
+            return LinkStrength;
         }
 
         public string GetOtherComicName(Comic SourceComic)
@@ -61,10 +82,7 @@ namespace NEAProject
             return Atts;
         }
 
-        public int GetStrength()
-        {
-            return LinkStrength;
-        }
+        
 
         /// <summary>
         /// Checks if the comic listed in the link is the source comic and 
@@ -84,6 +102,7 @@ namespace NEAProject
                 Response += Comic1.GetTitle() + ": ";
                 foreach (string Att in Atts)
                 {
+                    
                     foreach (string FilteredAtt in SaladCream.FilteredAtts)
                     {
                         if (Att != FilteredAtt)
@@ -107,13 +126,15 @@ namespace NEAProject
                     }
                 }
             }
-            Response += $"The strength of this link is: {Convert.ToString(LinkStrength)}";
+            Response += $"The strength of this link is: {Convert.ToString(GetStrength(SaladCream.FilteredAtts))}";
 
             return Response;
         }
 
         public DestComicSum DestComicAndAttsAsDestComicSum(Comic SourceComic)
         {
+            Manager SaladCream = ((App)Application.Current).manager; // stupid but memorable variable name, change this at some point
+
             DestComicSum Dest = new DestComicSum();
             if (Comic1.GetTitle() != SourceComic.GetTitle())
             {
@@ -124,7 +145,7 @@ namespace NEAProject
                 Dest.DestComic = Comic2;
             }
             Dest.Atts = Atts;
-            Dest.Strength = LinkStrength;
+            Dest.Strength = GetStrength(SaladCream.FilteredAtts);
             return Dest;
         }
 

@@ -57,7 +57,7 @@ namespace NEAProject
 
             foreach (string Att in Comic.AttirbuteNames)
             {
-                if (Convert.ToString(comboboxes[Att].SelectedItem) == "Yes") // Issue here. look at this next time
+                if (Convert.ToString(comboboxes[$"{Att}Filter"].SelectedItem) == "Yes")
                 {
                     PorkPie.FilteredAtts.Add(Att);
                 }
