@@ -8,6 +8,7 @@ namespace NEAProject
 {
     public struct DestComicSum
     {
+        public Comic SourceComic;
         public Comic DestComic;
         public List<string> Atts;
         public int Strength;
@@ -94,6 +95,9 @@ namespace NEAProject
         /// </returns>
         public string DestComicAndAttsAsString(Comic SourceComic)
         {
+            if (SourceComic.GetTitle() == "Invincible")
+                Console.WriteLine("dfgfgdfg");
+
             string Response = "";
             Manager SaladCream = ((App)Application.Current).manager; // stupid but memorable variable name, change this at some point
 
@@ -102,28 +106,19 @@ namespace NEAProject
                 Response += Comic1.GetTitle() + ": ";
                 foreach (string Att in Atts)
                 {
-                    
-                    foreach (string FilteredAtt in SaladCream.FilteredAtts)
-                    {
-                        if (Att != FilteredAtt)
-                        {
-                            Response += Att + ", ";
-                        }
-                    }
+                    // is Att not in FilteredAtts
+                    if (!SaladCream.FilteredAtts.Contains(Att))
+                        Response += Att + ", ";
                 }
             }
             else if (Comic2.GetTitle() != SourceComic.GetTitle())
             {
                 Response += Comic2.GetTitle() + ": ";
-                foreach (string Att in Atts)
+                foreach (string Att in Atts) // looping through all attributes of the source comic
                 {
-                    foreach (string FilteredAtt in SaladCream.FilteredAtts)
-                    {
-                        if (Att != FilteredAtt)
-                        {
-                            Response += Att + ", ";
-                        }
-                    }
+                    // is Att not in FilteredAtts
+                    if (!SaladCream.FilteredAtts.Contains(Att))
+                        Response += Att + ", ";
                 }
             }
             Response += $"The strength of this link is: {Convert.ToString(GetStrength(SaladCream.FilteredAtts))}";
@@ -131,11 +126,18 @@ namespace NEAProject
             return Response;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SourceComic"></param>
+        /// <returns> Returns the link as a struct called DestComicSum which contains 2 comics, some attributes and a strength of the link </returns>
         public DestComicSum DestComicAndAttsAsDestComicSum(Comic SourceComic)
         {
             Manager SaladCream = ((App)Application.Current).manager; // stupid but memorable variable name, change this at some point
 
             DestComicSum Dest = new DestComicSum();
+            Dest.SourceComic = SourceComic;
+
             if (Comic1.GetTitle() != SourceComic.GetTitle())
             {
                 Dest.DestComic = Comic1;
@@ -144,7 +146,13 @@ namespace NEAProject
             {
                 Dest.DestComic = Comic2;
             }
-            Dest.Atts = Atts;
+
+            foreach (string Att in Atts)
+            {
+                if (!SaladCream.FilteredAtts.Contains(Att))
+                Dest.Atts.Add(Att);
+            }
+
             Dest.Strength = GetStrength(SaladCream.FilteredAtts);
             return Dest;
         }

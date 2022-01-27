@@ -176,15 +176,16 @@ namespace NEAProject
             int HighestStrength = -1;
             List<Link> UnorderedLinks = SearchedComicAndLinks.Links;
             List<Link> OrderedLinks = new List<Link>();
+            Manager manager = ((App)Application.Current).manager;
 
             while (UnorderedLinks.Count > 0)
             {
                 HighestStrength = -1;
                 foreach (Link link in UnorderedLinks)
                 {
-                    if (link.GetStrength() >= HighestStrength)
+                    if (link.GetStrength(manager.FilteredAtts) >= HighestStrength)
                     {
-                        HighestStrength = link.GetStrength();  // NOT WORKING ask mr evason next lesson. again the filteredatts list is being used in Graph.cs
+                        HighestStrength = link.GetStrength(manager.FilteredAtts); 
                         NextLink = link;
                     }
                 }

@@ -22,14 +22,15 @@ namespace NEAProject
             GraphComic.AddComic(new Comic("Philip Kennedy Johnson", "Salvador Larroca", "Alien (2021)", 2021, 16));
             
 
-            GraphComic.AddLinkInAdjList(GraphComic.Graph["The Walking Dead"].thisComic, GraphComic.Graph["Invincible"].thisComic, "Author");
-            GraphComic.AddLinkInAdjList(GraphComic.Graph["The Walking Dead"].thisComic, GraphComic.Graph["Invincible"].thisComic, "PubYear");
-            GraphComic.AddLinkInAdjList(GraphComic.Graph["Death Note"].thisComic, GraphComic.Graph["The Walking Dead"].thisComic, "AgeRating");
+            //GraphComic.AddLinkInAdjList(GraphComic.Graph["The Walking Dead"].thisComic, GraphComic.Graph["Invincible"].thisComic, "Author");
+            //GraphComic.AddLinkInAdjList(GraphComic.Graph["The Walking Dead"].thisComic, GraphComic.Graph["Invincible"].thisComic, "PubYear");
+            //GraphComic.AddLinkInAdjList(GraphComic.Graph["Death Note"].thisComic, GraphComic.Graph["The Walking Dead"].thisComic, "AgeRating");
 
             //GraphComic.Graph["Invincible"].WhatAmILinkedTo();
             //GraphComic.Graph["Death Note"].WhatAmILinkedTo();
 
             GraphComic.FillAdjList();
+            string dfgdfg = "sdfgdfg";
             //GraphComic.Graph["The Walking Dead"].WhatAmILinkedTo();
         }
 
