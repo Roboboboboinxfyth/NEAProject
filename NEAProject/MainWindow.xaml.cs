@@ -66,12 +66,16 @@ namespace NEAProject
                 string ComicChoice = Convert.ToString(comboboxes["titles"].SelectedItem);
             
             List<Link> Links = PorkPie.GraphComic.Graph[ComicChoice].OrderLinks(PorkPie.GraphComic.Graph[ComicChoice]);
+            List<string> ComicsDest = new List<string>();
 
             foreach (Link link in Links)
             {
                 string display = link.DestComicAndAttsAsString(PorkPie.GraphComic.Graph[ComicChoice].thisComic);
                 MessageBox.Show(display);
+                ComicsDest.Add(link.GetOtherComicName(PorkPie.GraphComic.Graph[ComicChoice].thisComic));
             }
+
+            Database.StoreSearch(1, ComicChoice, PorkPie.FilteredAtts, ComicsDest);
         }
 
         public void BuildUI()

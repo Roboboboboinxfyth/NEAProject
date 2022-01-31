@@ -30,7 +30,6 @@ namespace NEAProject
             //GraphComic.Graph["Death Note"].WhatAmILinkedTo();
 
             GraphComic.FillAdjList();
-            string dfgdfg = "sdfgdfg";
             //GraphComic.Graph["The Walking Dead"].WhatAmILinkedTo();
         }
 
