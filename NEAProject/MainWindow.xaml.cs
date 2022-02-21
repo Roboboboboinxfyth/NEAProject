@@ -29,6 +29,7 @@ namespace NEAProject
         Dictionary<string, TextBox> textboxes = new Dictionary<string, TextBox>();
         Dictionary<string, ComboBox> comboboxes = new Dictionary<string, ComboBox>();
         Comic SearchedComic;
+        bool linknotfiltered = false;
 
 
 
@@ -36,12 +37,11 @@ namespace NEAProject
         {
             InitializeComponent();
 
-            BuildUI();
+            BuildMainMenu();
 
-            //NEED TO GET THE CHOICE FROM THE DROPDOWN MENU HERE
-
-            buttons["selection"].Click += new RoutedEventHandler(Btn_confirm_Click);
-
+            //Add thing here to go to recommendation window if button clicked
+            buttons["gotorecommend"].Click += new RoutedEventHandler(Start_Recommendation);
+            buttons["gotohistory"].Click += new RoutedEventHandler(Start_History);
         }
         /// <summary>
         /// Presents results when the button is clicked.
@@ -55,11 +55,16 @@ namespace NEAProject
             //MessageBox.Show(comic.GetTitle());
             //}
 
+            PorkPie.FilteredAtts.Clear();
+
             foreach (string Att in Comic.AttirbuteNames)
             {
-                if (Convert.ToString(comboboxes[$"{Att}Filter"].SelectedItem) == "Yes")
+                if (Att != "Title")
                 {
-                    PorkPie.FilteredAtts.Add(Att);
+                    if (Convert.ToString(comboboxes[$"{Att}Filter"].SelectedItem) == "Yes")
+                    {
+                        PorkPie.FilteredAtts.Add(Att);
+                    }
                 }
             }
 
@@ -71,11 +76,38 @@ namespace NEAProject
             foreach (Link link in Links)
             {
                 string display = link.DestComicAndAttsAsString(PorkPie.GraphComic.Graph[ComicChoice].thisComic);
-                MessageBox.Show(display);
+                if (link.GetStrength(PorkPie.FilteredAtts) != 0)
+                    MessageBox.Show(display);
                 ComicsDest.Add(link.GetOtherComicName(PorkPie.GraphComic.Graph[ComicChoice].thisComic));
             }
 
             Database.StoreSearch(1, ComicChoice, PorkPie.FilteredAtts, ComicsDest);
+
+            
+        }
+
+        void Start_Recommendation(object sender, RoutedEventArgs e)
+        {
+            BuildUI();
+            buttons["selection"].Click += new RoutedEventHandler(Btn_confirm_Click);
+        }
+
+        void Start_History(object sender, RoutedEventArgs e)
+        {
+            Show_History();
+        }
+
+        public void BuildMainMenu()
+        {
+            labels["getrecommend"] = UtilsGui.CreateLabel("Would you like to get a comic recommendation?", "getrecommend");
+            Skp_Main.Children.Add(labels["getrecommend"]);
+            buttons["gotorecommend"] = UtilsGui.CreateButton("Get Recommendation", "gotorecommend");
+            Skp_Main.Children.Add(buttons["gotorecommend"]);
+
+            labels["seehistory"] = UtilsGui.CreateLabel("Or would you like to see your recommendation history?", "seehistory");
+            Skp_Main.Children.Add(labels["seehistory"]);
+            buttons["gotohistory"] = UtilsGui.CreateButton("See History", "gotohistory");
+            Skp_Main.Children.Add(buttons["gotohistory"]);
         }
 
         public void BuildUI()
@@ -99,16 +131,26 @@ namespace NEAProject
 
             foreach (string Att in Comic.AttirbuteNames)
             {
-                labels[Att] = UtilsGui.CreateLabel($"Would you like to filter out suggestions including {Att}?", Att);
-                Skp_Main.Children.Add(labels[Att]);
-                comboboxes[$"{Att}Filter"] = UtilsGui.CreateComboBox($"{Att}Filter");
-                comboboxes[$"{Att}Filter"].Items.Add("Yes");
-                comboboxes[$"{Att}Filter"].Items.Add("No");
-                Skp_Main.Children.Add(comboboxes[$"{Att}Filter"]);
+                if (Att != "Title")
+                {
+                    labels[Att] = UtilsGui.CreateLabel($"Would you like to filter out suggestions including {Att}?", Att);
+                    Skp_Main.Children.Add(labels[Att]);
+                    comboboxes[$"{Att}Filter"] = UtilsGui.CreateComboBox($"{Att}Filter");
+                    comboboxes[$"{Att}Filter"].Items.Add("Yes");
+                    comboboxes[$"{Att}Filter"].Items.Add("No");
+                    comboboxes[$"{Att}Filter"].SelectedIndex = 1;
+                    Skp_Main.Children.Add(comboboxes[$"{Att}Filter"]);
+                }
             }
 
             buttons["selection"] = UtilsGui.CreateButton("Confirm", "selection");
             Skp_Main.Children.Add(buttons["selection"]);
+        }
+
+        public void Show_History()
+        {
+            History history = Database.GetSearchHistoryForUser();
+
         }
 
     }

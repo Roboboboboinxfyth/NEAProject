@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
 using System.Windows;
+using System.Linq;
 
 namespace NEAProject
 {
+
+    public struct History
+    {
+        public DateTime Date_Time;
+        public Comic Comic_Source;
+        public List<string> Active_Filters;
+        public List<Comic> Dest_Comics;
+    }
+
     class Database
     {
         private static string ConnString = "Data Source=.\\..\\..\\..\\database.sqlite; Version=3;";
@@ -30,42 +40,54 @@ namespace NEAProject
                 MessageBox.Show("Insertion failed");
 
             Conn.Close();
-
-            //SQLiteConnection Conn = new SQLiteConnection(ConnString);
-            //Conn.Open();
-
-            //SQLiteCommand QueryLogin = new SQLiteCommand(@"SELECT username, Auth_level, display_name
-            //                                               FROM Users
-            //                                               WHERE username = $Username
-            //                                               AND password = $Password", Conn);
-            //QueryLogin.Parameters.AddWithValue("$Username", Username);
-            //QueryLogin.Parameters.AddWithValue("$Password", Password);
-
-            //// other type here
-            //SQLiteDataReader Reader = QueryLogin.ExecuteReader();
-
-            //if (Reader.Read())
-            //{
-            //    ((App)Application.Current).stateManager.Username = Reader["display_name"].ToString();
-            //    Auth_level = Convert.ToInt32(Reader["Auth_Level"]);
-            //}
-            //else
-            //    Auth_level = -1;
-
-            //Conn.Close();
         }
 
 
-        public static void GetSearchHistoryForUser(int UserId)
+        public static History GetSearchHistoryForUser() //work in a parameter for userID
         {
-            
-            //SQLiteCommand QueryLogin = new SQLiteCommand(@"SELECT username, Auth_level, display_name
-            //                                               FROM Users
-            //                                               WHERE username = $Username
-            //                                               AND password = $Password", Conn);
-            //QueryLogin.Parameters.AddWithValue("$Username", Username);
-            //QueryLogin.Parameters.AddWithValue("$Password", Password);
+            Manager manager = ((App)Application.Current).manager;
 
+            List<string> FiltersAsList = new List<string>();
+            //List<string> Output = new List<string>();
+            History Output = new History();
+            SQLiteConnection Conn = new SQLiteConnection(ConnString);
+            Conn.Open();
+
+            SQLiteCommand QueryHistory = new SQLiteCommand(@"SELECT datetime, comic_source, filters_active, comics_dest
+                                                           FROM search", Conn);
+
+            SQLiteDataReader DBReader = QueryHistory.ExecuteReader();
+
+            //while (DBReader.Read())
+            //{
+            //    Output.Add(DBReader["datetime"].ToString());
+            //    Output.Add(DBReader["comic_source"].ToString());
+            //    Output.Add(DBReader["filters_active"].ToString());
+            //    Output.Add(DBReader["comics_dest"].ToString());
+            //}
+            while (DBReader.Read())
+            {
+                Output.Date_Time = Convert.ToDateTime(DBReader["datetime"].ToString());
+                Output.Comic_Source = manager.GraphComic.Graph[DBReader["comic_source"].ToString()].thisComic;
+                string FiltersAsString = DBReader["filters_active"].ToString();
+                string[] FilterAsArray = FiltersAsString.Split(',');
+                FiltersAsList = FilterAsArray.ToList();
+                Output.Active_Filters = FiltersAsList;
+                Output.Dest_Comics = new List<Comic>();
+                string Comics_DestAsString = DBReader["comics_dest"].ToString();
+                string[] Com_DestAsStrArr = Comics_DestAsString.Split(',');
+                foreach (string Com_Dest in Com_DestAsStrArr)
+                {
+                    Output.Dest_Comics.Add(manager.GraphComic.Graph[Com_Dest].thisComic);
+                }
+
+                //Now allow this info to be accessed by the user
+            }
+
+
+            Conn.Close();
+
+            return Output;
             //// other type here
             //SQLiteDataReader Reader = QueryLogin.ExecuteReader();
 
@@ -77,7 +99,7 @@ namespace NEAProject
             //else
             //    Auth_level = -1;
 
-            //Conn.Close();
+
         }
     }
 }

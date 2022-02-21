@@ -95,9 +95,6 @@ namespace NEAProject
         /// </returns>
         public string DestComicAndAttsAsString(Comic SourceComic)
         {
-            if (SourceComic.GetTitle() == "Invincible")
-                Console.WriteLine("dfgfgdfg");
-
             string Response = "";
             Manager SaladCream = ((App)Application.Current).manager; // stupid but memorable variable name, change this at some point
 
