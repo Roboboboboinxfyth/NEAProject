@@ -28,6 +28,7 @@ namespace NEAProject
         Dictionary<string, Button> buttons = new Dictionary<string, Button>();
         Dictionary<string, TextBox> textboxes = new Dictionary<string, TextBox>();
         Dictionary<string, ComboBox> comboboxes = new Dictionary<string, ComboBox>();
+        Dictionary<string, Expander> expanders = new Dictionary<string, Expander>();
         Comic SearchedComic;
         bool linknotfiltered = false;
 
@@ -150,7 +151,12 @@ namespace NEAProject
         public void Show_History()
         {
             History history = Database.GetSearchHistoryForUser();
+            labels["SearchedComic"] = UtilsGui.CreateLabel($"The Searched Comic Was {history.Comic_Source.GetTitle()}", "SourceComicName");
+            Skp_Main.Children.Add(labels["seehistory"]);
 
+            expanders["SearchComInfo"] = UtilsGui.CreateExpander()
+
+            // the thing that needs to go here is called an expander
         }
 
     }

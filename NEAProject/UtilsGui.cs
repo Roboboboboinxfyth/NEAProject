@@ -36,14 +36,28 @@ namespace NEAProject
                 Name = "Lbl_" + Name
             };
             return Lbl;
+        }
 
-        }public static ComboBox CreateComboBox(string Name)
+        public static ComboBox CreateComboBox(string Name)
         {
             ComboBox Cmb = new ComboBox
             {
-                Name = "Lbl_" + Name
+                Name = "Cmb_" + Name
             };
             return Cmb;
+        }
+
+        public static Expander CreateExpander(string Name, string Content)
+        {
+            Expander Exp = new Expander
+            {
+                Name = "Exp_" + Name
+            };
+                TextBlock tbc = new TextBlock();
+                tbc.Text = Content;
+                tbc.TextWrapping = TextWrapping.Wrap;       //work on this. Make a simple expander
+
+                return Exp;
         }
     }
 }

@@ -29,8 +29,8 @@ namespace NEAProject
             VALUES ($UserId, datetime('now'), $ComicSource, $FiltersActive, $ComicsDest)", Conn);
             SaveSearch.Parameters.AddWithValue("$UserId", UserId);
             SaveSearch.Parameters.AddWithValue("$ComicSource", ComicSource);
-            SaveSearch.Parameters.AddWithValue("$FiltersActive", string.Join(", ", FiltersActive.ToArray()));
-            SaveSearch.Parameters.AddWithValue("$ComicsDest", string.Join(", ", ComicsDest.ToArray()));
+            SaveSearch.Parameters.AddWithValue("$FiltersActive", string.Join(",", FiltersActive.ToArray()));
+            SaveSearch.Parameters.AddWithValue("$ComicsDest", string.Join(",", ComicsDest.ToArray()));
 
             int RowsChanged = SaveSearch.ExecuteNonQuery();
 
@@ -54,7 +54,10 @@ namespace NEAProject
             Conn.Open();
 
             SQLiteCommand QueryHistory = new SQLiteCommand(@"SELECT datetime, comic_source, filters_active, comics_dest
-                                                           FROM search", Conn);
+                                                             FROM search
+                                                             WHERE id = (SELECT 
+                                                             MAX (search.id)
+                                                             FROM search)", Conn);
 
             SQLiteDataReader DBReader = QueryHistory.ExecuteReader();
 
