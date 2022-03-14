@@ -13,13 +13,13 @@ namespace NEAProject
         public Manager()
         {
             // create some comics - temp!!
-            GraphComic.AddComic(new Comic("Tsugumi Ohba", "Takeshi Obata", "Death Note", 2004, 16));
+            GraphComic.AddComic(new Comic("Tsugumi Ohba", "Takeshi Obata", "Death_Note", 2004, 16));
             GraphComic.AddComic(new Comic("Greg Rucka", "Michael Lark", "Lazarus", 2020, 18));
-            GraphComic.AddComic(new Comic("Robert Kirkman", "Charlie Adlard", "The Walking Dead", 2011, 18));
+            GraphComic.AddComic(new Comic("Robert Kirkman", "Charlie Adlard", "The_Walking_Dead", 2011, 18));
             GraphComic.AddComic(new Comic("Patrick Renault", "Charlie Adlard", "Vampire State Building", 2019, 18));
             GraphComic.AddComic(new Comic("Robert Kirkman", "Ryan Ottley", "Invincible", 2003, 16));
             GraphComic.AddComic(new Comic("Yumi Hotta", "Takeshi Obata", "Hikaru no Go", 1998, 12));
-            GraphComic.AddComic(new Comic("Philip Kennedy Johnson", "Salvador Larroca", "Alien (2021)", 2021, 16));
+            GraphComic.AddComic(new Comic("Philip Kennedy Johnson", "Salvador Larroca", "Alien_(2021)", 2021, 16));
             
 
             //GraphComic.AddLinkInAdjList(GraphComic.Graph["The Walking Dead"].thisComic, GraphComic.Graph["Invincible"].thisComic, "Author");

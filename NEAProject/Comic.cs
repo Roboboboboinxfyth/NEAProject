@@ -37,44 +37,6 @@ namespace NEAProject
 
         // methods
 
-        
-
-        //public List<string> GetAllAttributeNames()
-        //{
-        //    List<string> Attributes = new List<string>();
-        //    foreach (string Key in Atts.Keys)
-        //    {
-        //        Attributes.Add(Key);
-        //    }
-        //    return Attributes;
-        //}
-
-
-        // this selection statement will get very repetitive!!!
-        // it will need to be refactored at some point in the future
-        //public List<Link> GetLinkedComicsByAttribute()
-        //{
-        //    List<Link> CommonComics = new List<Link>();
-
-        //    Manager manager = ((App)Application.Current).manager;
-
-
-        //    //look at property
-        //    foreach (Comic comic in manager.ComicsTemp)
-        //    {
-        //        //if (Author == comic.GetAttribute(Attribute) && Attribute == "Author" && Title != comic.GetTitle())
-        //        //{
-        //        //    CommonComics.Add(new Link(Title, comic.GetTitle(), Attribute));
-        //        //}
-        //        foreach (String Attribute in comic.GetAllAttributeNames())
-        //        if (Atts[Attribute] == comic.GetAttribute(Attribute) && Atts["Title"] != comic.GetAttribute("Title"))
-        //        {
-        //            CommonComics.Add(new Link(Atts["Title"], comic.GetAttribute("Title"), Attribute));
-        //        }
-        //    }
-
-        //    return CommonComics;
-        //}
 
         public dynamic GetAttribute(string Attribute)
         {
@@ -93,34 +55,14 @@ namespace NEAProject
             return Atts["Title"];
         }
 
-        //public string GetAuthor()
-        //{
-        //    return Author;
-        //}
-
-        //public string GetArtist()
-        //{
-        //    return Artist;
-        //}
-
-        //public int GetPubYear()
-        //{
-        //    return PubYear;
-        //}
-
-        //public int GetAgeRating()
-        //{
-        //    return AgeRating;
-        //}
-
-        //public string GetCreators()
-        //{
-        //    if (Author == Artist)
-        //    {
-        //        return $"{Title} is written and illustrated by {Author}";
-        //    }
-        //    else
-        //        return $"{Title} is written by {Author} and illustrated by {Artist}";
-        //}
+        public string GetInfo()
+        {
+            string info = "";
+            foreach (string Att in Atts.Keys)
+            {
+                info += $"This comic's {Att} is {Atts[Att]} \n";
+            }
+            return info;
+        }
     }
 }

@@ -47,17 +47,19 @@ namespace NEAProject
             return Cmb;
         }
 
-        public static Expander CreateExpander(string Name, string Content)
+        public static Expander CreateExpander(string Name,string Header, string Content)
         {
-            Expander Exp = new Expander
+            Expander Exp = new Expander()
             {
                 Name = "Exp_" + Name
             };
-                TextBlock tbc = new TextBlock();
-                tbc.Text = Content;
-                tbc.TextWrapping = TextWrapping.Wrap;       //work on this. Make a simple expander
-
+                Exp.Header = Header;
+                Exp.HorizontalAlignment = HorizontalAlignment.Left;
+                Exp.Width = 250;
+                Exp.IsExpanded = false;
+                Exp.Content = Content;
                 return Exp;
+            }
         }
     }
-}
+;

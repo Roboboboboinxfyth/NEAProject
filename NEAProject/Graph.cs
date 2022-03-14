@@ -75,25 +75,13 @@ namespace NEAProject
                     
                 }
             }
-
-            //foreach (ComicAndLinks ComAndLin in Graph.Values)
-            //{
-            //    Dictionary<string, dynamic> Atts1 = ComAndLin.thisComic.Atts;
-            //    for (int i = 0; i < ComAndLin.thisComic.Atts.Count; i++)
-            //    {
-            //        foreach (ComicAndLinks OtherCom in Graph.Values)
-            //        {
-            //            Dictionary<string, dynamic> Atts2 = OtherCom.thisComic.Atts;
-            //            for (int j = 0; j < OtherCom.thisComic.Atts.Count; j++)
-            //            {
-            //                if (Atts1.Keys[i] == OtherAttName && ComAndLin.thisComic.Atts.Values)
-            //            }
-            //        }
-            //    }
-            //    // Add stuff here to find all the links possible
-            //}
         }
     }
+
+
+
+
+
 
     public class ComicAndLinks
     {
