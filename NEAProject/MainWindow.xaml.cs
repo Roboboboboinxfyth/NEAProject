@@ -176,7 +176,7 @@ namespace NEAProject
             foreach (Comic comic in history.Dest_Comics)
             {
                 labels[$"DestComic{comic.GetTitle()}"] = UtilsGui.CreateLabel($"Recommended comic:{comic.GetTitle()}", $"DestComic{comic.GetTitle()}");
-                Skp_Main.Children.Add(labels["SearchedComicName"]); //Displays each destination comic title
+                Skp_Main.Children.Add(labels[$"DestComic{comic.GetTitle()}"]); //Displays each destination comic title
 
                 expanders[$"DestCom{comic.GetTitle()}Info"] = UtilsGui.CreateExpander($"DestCom{comic.GetTitle()}Info", $"See more info on {comic.GetTitle()}", comic.GetInfo());
                 Skp_Main.Children.Add(expanders[$"DestCom{comic.GetTitle()}Info"]); //Creates an expander with more info on each one

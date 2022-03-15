@@ -33,8 +33,8 @@ namespace NEAProject
             Label Lbl = new Label
             {
                 Content = Display,
-                Name = "Lbl_" + Name
-            };
+                Name = "Lbl_" + Name.Replace(" ", "_")
+        };
             return Lbl;
         }
 
@@ -51,7 +51,7 @@ namespace NEAProject
         {
             Expander Exp = new Expander()
             {
-                Name = "Exp_" + Name
+                Name = "Exp_" + Name.Replace(" ", "_")
             };
                 Exp.Header = Header;
                 Exp.HorizontalAlignment = HorizontalAlignment.Left;
