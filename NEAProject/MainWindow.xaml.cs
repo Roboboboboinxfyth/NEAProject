@@ -29,8 +29,8 @@ namespace NEAProject
         Dictionary<string, TextBox> textboxes = new Dictionary<string, TextBox>();
         Dictionary<string, ComboBox> comboboxes = new Dictionary<string, ComboBox>();
         Dictionary<string, Expander> expanders = new Dictionary<string, Expander>();
-        Comic SearchedComic;
-        bool linknotfiltered = false;
+        // Comic SearchedComic;
+        // bool linknotfiltered = false;
 
 
 
@@ -71,7 +71,7 @@ namespace NEAProject
 
             string ComicChoice = Convert.ToString(comboboxes["titles"].SelectedItem);//ComicChoice variable set to the choice of the user.
             
-            List<Link> Links = manager.GraphComic.Graph[ComicChoice].OrderLinks(manager.GraphComic.Graph[ComicChoice]);
+            List<Link> Links = manager.GraphComic.Graph[ComicChoice].OrderLinks();
             //Calls the OrderLinks subroutine
             List<string> ComicsDest = new List<string>(); //Creates a list of destination comics.
 

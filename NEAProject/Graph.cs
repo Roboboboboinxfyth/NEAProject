@@ -158,11 +158,11 @@ namespace NEAProject
             return Links;
         }
 
-        public List<Link> OrderLinks(ComicAndLinks SearchedComicAndLinks)
+        public List<Link> OrderLinks()
         {
             Link NextLink = null;
             int HighestStrength = -1;
-            List<Link> UnorderedLinks = SearchedComicAndLinks.Links;
+            List<Link> UnorderedLinks = Links;
             List<Link> OrderedLinks = new List<Link>();
             Manager manager = ((App)Application.Current).manager;
 
